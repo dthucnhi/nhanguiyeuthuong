@@ -1,0 +1,15 @@
+{
+    "name": "sonminh/home",
+    "description": "",
+    "authors": [
+        {
+            "name": "sonminh",
+            "email": "sonminh@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Modules\\Home\\": ""
+        }
+    }
+}
