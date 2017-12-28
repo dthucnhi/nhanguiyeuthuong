@@ -97,12 +97,19 @@ $(document).ready(function () {
             attributes: { style: "text-align:center; width:50px;" },
             width: 110,
             template:'#=data.sTrangThai#'
+
         }, {
             title: 'Tác vụ',
             headerAttributes: { style: "text-align:center;" },
             attributes: { style: "text-align:center; width:90px;", "class": "text-center nowrap" },
             template: '#=data.sTacvu#',
             width: 90,
+        }, {
+            field: "timecall",
+            title: 'Thời gian gọi',
+            headerAttributes: { style: "text-align:center;" },
+            attributes: { style: "text-align:center; width:90px;", "class": "text-center nowrap" },
+            width: 150,
         }, {
             title: 'File ghi âm',
             field: "File1",

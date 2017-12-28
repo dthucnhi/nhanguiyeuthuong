@@ -27,7 +27,9 @@ class CoreController extends Controller
     {
         return view('core::index');
     }
-
+    public function index2(){
+        return view('core::index2');
+    }
     /**
      * Show the form for creating a new resource.
      * @return Response
@@ -95,6 +97,12 @@ class CoreController extends Controller
                 'Status' => '300',
             ]);
         }
+        if($request->input('phonereceiver') == $request->input('phonesender')){
+            return response()->json([
+                'Message' => 'Hệ thống phát hiện bạn đang tự kỷ, vui lòng nhập số người nhận và số người gửi khác nhau bạn nhé !!',
+                'Status' => '300',
+            ]);
+        }
         $userslist = new userslist;
         $filelocation = '/uploads/audio/';
         $vFile1="";
@@ -113,11 +121,11 @@ class CoreController extends Controller
         }
         if($request->hasFile('audio2')){
             $validatorFileAudio= Validator::make($request->all(), [
-                'audio2' => 'max:3072|mimes:mpga',
+                'audio2' => 'max:3072|mimes:mpga,mp3,mpeg',
             ]);
             if($validatorFileAudio->fails()){
                 return response()->json([
-                    'Message' => 'File bạn upload lớn hơn 3MB hoặc không phải là file MP3. Vui lòng thử lại file khác nhé.',
+                    'Message' => 'File bạn upload lớn hơn 3MB hoặc không phải là file MP3. Vui lòng thử lại file khác nhé.'.$request->file('audio2')->guessExtension(),
                     'Status' => '300',
                 ]);
             }
@@ -139,17 +147,38 @@ class CoreController extends Controller
             $i++;
         }
         if($i!=0){
-            $data=$userslist->Create(
-                [
-                    'namereceiver' => $request->get('namereceiver'),
-                    'phonereceiver' => $request->get('phonereceiver'),
-                    'namesender' => $request->get('namesender'),
-                    'phonesender' => $request->get('phonesender'),
-                    'vFile1' => $vFile1,
-                    'vFile2' => $vFile2,
-                    'timecall' => $request->input('date')
-                ]
-            );
+            if( strpos($request->get('phonereceiver'), ',') !== false ) {
+                $arr=explode(',',$request->get('phonereceiver'));
+                foreach ($arr as $value){
+                    if(!empty($value))
+                    {
+                        $data=$userslist->Create(
+                            [
+                                'namereceiver' => $request->get('namereceiver'),
+                                'phonereceiver' => $value,
+                                'namesender' => $request->get('namesender'),
+                                'phonesender' => $request->get('phonesender'),
+                                'vFile1' => $vFile1,
+                                'vFile2' => $vFile2,
+                                'timecall' => $request->input('date')
+                            ]
+                        );
+                    }
+                }
+            }else{
+                $data=$userslist->Create(
+                    [
+                        'namereceiver' => $request->get('namereceiver'),
+                        'phonereceiver' => $request->get('phonereceiver'),
+                        'namesender' => $request->get('namesender'),
+                        'phonesender' => $request->get('phonesender'),
+                        'vFile1' => $vFile1,
+                        'vFile2' => $vFile2,
+                        'timecall' => $request->input('date')
+                    ]
+                );
+            }
+
             return response()->json([
                 'Message' => 'CloudFone sẽ gửi những yêu thương của bạn đến người ấy trong thời gian sớm nhất!!',
                 'Status' => '200',
@@ -165,6 +194,13 @@ class CoreController extends Controller
     public function getLink(Request $request){
         $client = new Client();
         $linkFileDownload=$request->input('link');
+        if(!filter_var($linkFileDownload,FILTER_VALIDATE_URL)){
+            return response()->json([
+                'Message' => 'URL bạn nhập vào không hợp lệ. Vui lòng nhập vào URL hợp lệ như sau: https://mp3.zing.vn/bai-hat/Da-Lo-Yeu-Em-Nhieu-JustaTee/ZW8W6UEF.html !!',
+                'Status' => '300',
+            ]);
+        }
+
         $data=explode('/',$linkFileDownload);
         if($data[0]!='https:')
         {
@@ -173,14 +209,6 @@ class CoreController extends Controller
                 'Status' => '300',
             ]);
         }
-
-        if($data[2] != 'mp3.zing.vn'){
-            return response()->json([
-                'Message' => 'Hiện tại chỉ chấp nhận link từ trang nhạc mp3.zing.vn. Vui lòng nhập vào link bài hát từ mp3.zing.vn nhé !!',
-                'Status' => '300',
-            ]);
-        }
-
         if($data[3] == 'bai-hat')
         {
             $domain=$data[2];
@@ -219,14 +247,14 @@ class CoreController extends Controller
                 ]);
             }else{
                 return response()->json([
-                    'Message' => 'Không thể lấy được link này, vui lòng chọn link khác !!',
+                    'Message' => 'Hệ thống không thể tìm thấy file nhạc từ link này, vui lòng nhập link khác !!',
                     'Status' => '300',
                 ]);
             }
         }
         else{
             return response()->json([
-                'Message' => 'Không thể lấy file từ link này, bạn vui lòng chọn link bài hát!!',
+                'Message' => 'Hệ thống không thể tìm thấy file nhạc từ link này, bạn vui lòng chọn link dạng bài hát. VD: https://mp3.zing.vn/bai-hat/Da-Lo-Yeu-Em-Nhieu-JustaTee/ZW8W6UEF.html',
                 'Status' => '300',
             ]);
         }

@@ -16,17 +16,17 @@ jQuery(document).ready(function($){
     var windowHalfY = window.innerHeight / 2;
     var particles = [];
     var particleImage = new Image();
-    particleImage.src = 'ticker/img/snow.png';
+    particleImage.src = 'ticker/img/dao.png';
     function snowEffectBind() {
         container = $('.snowEffect');
         camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
-        camera.position.z = 1000;
+        camera.position.z = 100;
         scene = new THREE.Scene();
         scene.add(camera);
         renderer = new THREE.CanvasRenderer();
         renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         var material = new THREE.ParticleBasicMaterial({ map: new THREE.Texture(particleImage) });
-        for (var i = 0; i < 500; i++) {
+        for (var i = 0; i < 200; i++) {
             particle = new Particle3D(material);
             particle.position.x = Math.random() * 2000 - 1000;
             particle.position.y = Math.random() * 2000 - 1000;
@@ -76,9 +76,53 @@ jQuery(document).ready(function($){
         camera.lookAt(scene.position);
         renderer.render(scene, camera);
     }
-    snowEffectBind();
+    if( navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ){
+        $(".sound").css('visibility','hidden');
+        $.jPlayer.pause();
+    }
+    else {
+        snowEffectBind();
+        $(".morph-content").css("border-radius","20px");
+        $('.sound').click(function() {
+            if ($(this).hasClass('sound-mute')) {
+                musicOnOff(true);
+            }
+            else {
+                musicOnOff(false);
+            }
+            $(this).toggleClass('sound-mute');
+        });
+
+        $('div#player').ttwMusicPlayer(myPlaylist, {
+            autoPlay: true,
+            shuffleOnLoop: true,
+            jPlayer: {
+                swfPath: 'Jplayer'
+            }
+        });
+        $("#guiyeuthuong").click(function () {
+            $('.sound').addClass('sound-mute');
+            if($('.sound').hasClass('sound-mute')){
+                musicOnOff(false);
+            }
+        });
+        $("#closebutton").click(function () {
+            $('.sound').removeClass('sound-mute');
+            if(!$('.sound').hasClass('sound-mute')){
+                musicOnOff(true);
+            }
+        });
+    }
+    $('[data-toggle="tooltip"]').tooltip();
     var now = new Date();
-    var dayWrapper = moment(60000 + now.valueOf());
+    var dayWrapper = moment(900000 + now.valueOf());
     var dayString = dayWrapper.format("DD/MM/YYYY H:mm");
 
     $('#date').daterangepicker({
@@ -98,7 +142,16 @@ jQuery(document).ready(function($){
         console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
     });
 });
-
+function musicOnOff(isOn) {
+    if (isOn == true) {
+        $('a.musicPlayer').removeClass('off');
+        $.jPlayer.play();
+    }
+    else {
+        $('a.musicPlayer').addClass('off');
+        $.jPlayer.pause();
+    }
+}
 function OnShowPoppupInfo() {
 
     $.ajax({

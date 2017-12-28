@@ -44,12 +44,97 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        #loading {
+            width: 100%;
+            height: 100%;
+            background: #193c54 url(/theme/Loading/Loading-bg.jpg) no-repeat center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+        }
+        .load{
+            position: relative;
+            /*width: 194px;*/
+            height: 112px;
+            top: 60%;
+            margin: -56px auto;
+        }
+        #loading .spinner {
+            position: relative;
+            width: 94px;
+            height: 112px;
+            top: 50%;
+            margin: -56px auto;
+            background: url(/theme/Loading/loading.png) no-repeat center;
+            -webkit-animation: mask 1s infinite alternate;
+            -moz-animation: mask 1s infinite alternate;
+            -ms-animation: mask 1s infinite alternate;
+            -o-animation: mask 1s infinite alternate;
+            animation: mask 1s infinite alternate;
+        }
+        @-webkit-keyframes mask {
+            0% {
+                -webkit-transform: rotate(90deg);
+            }
 
+            100% {
+                -webkit-transform: rotate(-90deg);
+            }
+        }
+
+        @-moz-keyframes mask {
+            0% {
+                -moz-transform: rotate(90deg);
+            }
+
+            100% {
+                -moz-transform: rotate(-90deg);
+            }
+        }
+
+        @-ms-keyframes mask {
+        0% {
+            -ms-transform: rotate(90deg);
+        }
+
+        100% {
+            -ms-transform: rotate(-90deg);
+        }
+        }
+
+        @-o-keyframes mask {
+            0% {
+                -o-transform: rotate(90deg);
+            }
+
+            100% {
+                -o-transform: rotate(-90deg);
+            }
+        }
+
+        @keyframes mask {
+            0% {
+                transform: rotate(90deg);
+            }
+
+            100% {
+                transform: rotate(-90deg);
+            }
+        }
+    </style>
 </head>
 <body class="page-header-fixed compact-menu page-horizontal-bar">
 <div class="overlay"></div>
-
 <main class="page-content content-wrap">
+    <div id="loading" style="visibility: hidden">
+        <div class="spinner">
+        </div>
+        <div class="load">
+            Hệ thống đang xử lý yêu cầu. Vui lòng đợi...
+        </div>
+    </div>
     <div class="navbar">
         <div class="navbar-inner container">
             <div class="sidebar-pusher">

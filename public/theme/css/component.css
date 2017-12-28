@@ -114,7 +114,7 @@
 	z-index: 800;
 	width: 100%;
 	height: 100%;
-	background: rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.8);
 	content: '';
 	opacity: 0;
 	filter: alpha(opacity=0.5);
@@ -231,7 +231,7 @@
 .morph-button-modal-3.open .morph-content {
 	margin: -255px 0 0 -210px;
 	width: 420px;
-	height: 599px;
+	height: 600px;
 }
 
 .morph-button-modal-3.open .morph-content > div {

@@ -32,17 +32,17 @@ jQuery(function($){
 		thumb_links				:	1,			// Individual thumb links for each slide
 		thumbnail_navigation    :   0,			// Thumbnail navigation
 		slides 					:  	[			// Slideshow Images
-										{image : 'theme/img/0226.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-										{image : 'theme/img/19389.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-										{image : 'theme/img/469187520.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-            							// {image : 'theme/img/HD.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-            							// {image : 'theme/img/54131.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-										{image : 'theme/img/2015.jpg', title : 'Rosa - Responsive Coming Soon Template'},
-										// {image : 'theme/img/HD.jpg', title : 'Rosa - Responsive Coming Soon Template'}
+										{image : 'theme/img/maxresdefault.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+										{image : 'theme/img/7959.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+										{image : 'theme/img/4a971.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+                                        {image : 'theme/img/10ad868.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+                                        {image : 'theme/img/1234asd.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+										{image : 'theme/img/114bd.jpg', title : 'Rosa - Responsive Coming Soon Template'},
+										{image : 'theme/img/envelope.jpg', title : 'Rosa - Responsive Coming Soon Template'}
 									],
 										
 		// Theme Options			   
-		progress_bar			:	1,			// Timer for each slide							
+		progress_bar			:	1,			// Timer for each slside
 		mouse_scrub				:	0
 			
 	});

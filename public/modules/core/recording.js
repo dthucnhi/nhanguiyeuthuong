@@ -58,18 +58,18 @@ function stopRecordingCallback() {
 
     // btnStartRecording.disabled = false;
 
-    setTimeout(function() {
-        if(!audio.paused) return;
-
-        setTimeout(function() {
-            if(!audio.paused) return;
-            audio.play();
-        }, 1000);
-
-        audio.play();
-    }, 300);
-
-    audio.play();
+    // setTimeout(function() {
+    //     if(!audio.paused) return;
+    //
+    //     setTimeout(function() {
+    //         if(!audio.paused) return;
+    //         audio.play();
+    //     }, 1000);
+    //
+    //     audio.play();
+    // }, 300);
+    //
+    // audio.play();
 
     // btnDownloadRecording.disabled = false;
 

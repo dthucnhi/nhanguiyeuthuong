@@ -49,17 +49,35 @@ class HomeController extends Controller
             $file2->move(public_path().$filelocation,strtolower($this->helper->removeDau($file2->getClientOriginalName())));
             $filename2=$filelocation.strtolower($this->helper->removeDau($file2->getClientOriginalName()));
 
-            $data=$userslist->Create(
-                [
-                    'namereceiver' => $request->get('namereceiver'),
-                    'phonereceiver' => $request->get('phonereceiver'),
-                    'namesender' => $request->get('namesender'),
-                    'phonesender' => $request->get('phonesender'),
-                    'vFile1' => $filename1,
-                    'vFile2' => $filename2,
-                    'timecall' => $request->input('date')
-                ]
-            );
+
+            if( strpos($request->get('phonereceiver'), ',') !== false ) {
+                $arr=explode(',',$request->get('phonereceiver'));
+                foreach ($arr as $value){
+                    $data=$userslist->Create(
+                        [
+                            'namereceiver' => $request->get('namereceiver'),
+                            'phonereceiver' => $value,
+                            'namesender' => $request->get('namesender'),
+                            'phonesender' => $request->get('phonesender'),
+                            'vFile1' => $filename1,
+                            'vFile2' => $filename2,
+                            'timecall' => $request->input('date')
+                        ]
+                    );
+                }
+            }else{
+                $data=$userslist->Create(
+                    [
+                        'namereceiver' => $request->get('namereceiver'),
+                        'phonereceiver' => $request->get('phonereceiver'),
+                        'namesender' => $request->get('namesender'),
+                        'phonesender' => $request->get('phonesender'),
+                        'vFile1' => $filename1,
+                        'vFile2' => $filename2,
+                        'timecall' => $request->input('date')
+                    ]
+                );
+            }
             $datepicker=explode(" ",$request->input('date'));
             $time=explode(":",$datepicker[1]);
             $hour=$time[0];
@@ -98,6 +116,11 @@ class HomeController extends Controller
                 'iCall' => 1,
             ]
         );
+        $infoUser=$userslist->GetDataById($id);
+        $client = new Client();
+        $Url="http://103.237.148.167/modules/noticeaftercall.php?phoneNumber=$infoUser->phonesender";
+        $request = $client->get($Url);
+        $response = $request->getBody();
         if($data==1){
             return response()->json([
                 'Message' => 'Update id '.$id.' thành công!!',

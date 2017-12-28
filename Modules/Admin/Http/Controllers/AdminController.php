@@ -140,7 +140,7 @@ class AdminController extends Controller
             else{
                 $File2="";
             }
-            $Url="http://103.237.148.29/modules/test.php?url1=".$File1."&url2=".$File2."&time=".$hour.":".$minute."&day=".$year."-".$month."-".$day."&phoneNumber=".$data->phonereceiver."&id=".$data->id;
+            $Url="http://103.237.148.167/modules/test.php?url1=".$File1."&url2=".$File2."&time=".$hour.":".$minute."&day=".$year."-".$month."-".$day."&phoneNumber=".$data->phonereceiver."&id=".$data->id;
             $request = $client->get($Url);
             $response = $request->getBody();
             return 1;

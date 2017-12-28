@@ -11,11 +11,31 @@ class users extends Seeder
      */
     public function run()
     {
-        $username='admin'.rand();
-        DB::table('users')->insert([
-            'name' => $username,
-            'email' => $username.'@ods.vn',
-            'password' => bcrypt('secret'),
-        ]);
+        $array=array('admin','voip','support','sale');
+        foreach ($array as $value){
+
+            if($value == 'sale'){
+                for($i=1;$i<6;$i++)
+                {
+                    $username=$value.$i;
+                    $password=$username.'@secret';
+                    DB::table('users')->insert([
+                        'name' => $username,
+                        'email' => $username.'@ods.vn',
+                        'password' => bcrypt($password),
+                    ]);
+                }
+            }
+            else{
+                $username=$value.rand();
+                $password=$username.'@secret';
+                DB::table('users')->insert([
+                    'name' => $username,
+                    'email' => $username.'@ods.vn',
+                    'password' => bcrypt($password),
+                ]);
+            }
+        }
+
     }
 }
